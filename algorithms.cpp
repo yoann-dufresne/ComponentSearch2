@@ -136,12 +136,14 @@ Graph<MetaNode> absorbFingers (Graph<MetaNode> graph) {
 }
 
 
-Graph<MetaNode> filterNodes (Graph<MetaNode> graph, int threshold) {
+
+Graph<MetaNode> filterNodes (Graph<MetaNode> graph, int nodeThreshold) {
 	vector<MetaNode> toRemove;
 
 	// Detect removable
 	for (MetaNode & mn : graph.nodes) {
-		if (mn.subNodes.size() <= threshold) {
+
+		if (mn.subNodes.size() <= nodeThreshold) {
 			// Remove links
 			for (int neiIdx : mn.neighbors) {
 				MetaNode & metaNei = graph.getNodeFromIdx(neiIdx);
@@ -155,11 +157,59 @@ Graph<MetaNode> filterNodes (Graph<MetaNode> graph, int threshold) {
 		}
 	}
 
+	// Remove meta nodes filtered
 	for (MetaNode & mn : toRemove) {
 		graph.nodes.erase(
 			remove(graph.nodes.begin(), graph.nodes.end(), mn),
 			graph.nodes.end()
 		);
+	}
+
+	return graph;
+}
+
+
+struct edge_s {
+	int from;
+	int to;
+	int weight;
+};
+
+Graph<MetaNode> filterEdges (Graph<MetaNode> graph, int edgeThreshold, int originalSize) {
+	// compute the nodes affectations
+	vector<int> metaAffectation (originalSize, -1);
+	for (MetaNode & mn : graph.nodes) {
+		for (Node & n : mn.subNodes) {
+			metaAffectation[n.idx] = mn.idx;
+		}
+	}
+
+	// Compute weights
+	for (MetaNode & mn : graph.nodes) {
+		map<int, int> weights;
+
+		for (Node & n : mn.subNodes) {
+			for (int neiIdx : n.neighbors) {
+				int metaIdx = metaAffectation[neiIdx];
+
+				if (metaIdx != mn.idx) {
+					int weight = weights.find(neiIdx) == weights.end() ? 1 : weights[neiIdx] + 1;
+					weights[neiIdx] = weight;
+				}
+			}
+		}
+
+		// Deletion of edges under the threshold
+		for (map<int,int>::iterator it = weights.begin(); it != weights.end(); ++it) {
+			int neiIdx = it->first;
+
+			if (it->second <= edgeThreshold) {
+				mn.neighbors.erase(
+					remove(mn.neighbors.begin(), mn.neighbors.end(), neiIdx),
+					mn.neighbors.end()
+				);
+			}
+		}
 	}
 
 	return graph;

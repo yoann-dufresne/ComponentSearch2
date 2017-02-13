@@ -77,6 +77,8 @@ int main (int argc, char * argv[]) {
 	Graph<Node> graph = load_graph(nodesFile, edgesFile);
 	cout << graph.nodes.size() << " nodes loaded " << endl;
 
+
+
 	// --- Algorithms ---
 	cout << endl << "--- Run algorithms ---" << endl;
 	cout << "-> DFS..." << endl;
@@ -92,11 +94,16 @@ int main (int argc, char * argv[]) {
 
 
 	cout << endl << "--- Filtering ---" << endl;
-	cout << "-> Filter nodes..." << endl;
+	cout << "-> Filtering nodes..." << endl;
 	Graph<MetaNode> filtered = filterNodes (contracted, nodeFilter);
+
+	cout << "-> Filtering edges..." << endl;
+	filtered = filterEdges (filtered, nodeFilter, graph.nodes.size());
 	cout << filtered.nodes.size() << " nodes in the filtered graph" << endl;
 
-	cout << "-> Filter edges..." << endl;
+
+
+	// --- Splicing ---
 
 
 	cout << endl << "--- Program ended ---" << endl;
