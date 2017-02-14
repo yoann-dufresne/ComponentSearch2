@@ -1,6 +1,5 @@
 #include "io.hpp"
 
-#include <sstream>
 
 
 vector<string> split (string & line, char delim);
@@ -80,3 +79,72 @@ vector<string> split (string & line, char delim) {
 
 	return strs;
 }
+
+
+void save_componants (Graph<MetaNode> metagraph, Graph<Node> graph, ifstream & nodes, ofstream & componentsStream) {
+	// Init
+	set<int> toCompute;
+	for (MetaNode & mn : metagraph.nodes) {
+		toCompute.insert(mn.idx);
+	}
+
+
+	// Assignations
+	int compIdx = 0;
+	vector<int> components (graph.nodes.size(), -1);
+	vector<int> metaNodes (graph.nodes.size(), -1);
+	while (toCompute.size() > 0) {
+		// Select a first metanode to assign
+		set<int> currentComponent;
+		currentComponent.insert(*(toCompute.begin()));
+		toCompute.erase(toCompute.begin());
+
+		// BFS to search for all the elements of the current component
+		while (currentComponent.size() > 0) {
+			// Get a meta note in the waiting set
+			int metaIdx = *(currentComponent.begin());
+			currentComponent.erase(currentComponent.begin());
+			MetaNode & mn = metagraph.getNodeFromIdx(metaIdx);
+
+			// Perform assignations
+			for (Node & n : mn.subNodes) {
+				components[n.idx] = compIdx;
+				metaNodes[n.idx] = mn.idx;
+			}
+
+			// Add neighbors
+			for (int neiIdx : mn.neighbors) {
+				if (toCompute.find(neiIdx) != toCompute.end()) {
+					currentComponent.insert(neiIdx);
+					toCompute.erase(neiIdx);
+				}
+			}
+		}
+
+		compIdx++;
+	}
+
+	// Save components
+	string line;
+	getline(nodes, line);
+	componentsStream << line << ";metanode;component" << endl;
+
+	for (int i=0 ; i<graph.nodes.size() ; i++) {
+		getline(nodes, line);
+		componentsStream << line << ";" << metaNodes[i] << ";" << components[i] << endl;
+	}
+}
+
+
+void save_metagraph (Graph<MetaNode> graph, ofstream & nodes, ofstream & edges) {
+	
+}
+
+
+
+
+
+
+
+
+

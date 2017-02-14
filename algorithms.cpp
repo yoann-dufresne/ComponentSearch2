@@ -169,11 +169,6 @@ Graph<MetaNode> filterNodes (Graph<MetaNode> graph, int nodeThreshold) {
 }
 
 
-struct edge_s {
-	int from;
-	int to;
-	int weight;
-};
 
 Graph<MetaNode> filterEdges (Graph<MetaNode> graph, int edgeThreshold, int originalSize) {
 	// compute the nodes affectations

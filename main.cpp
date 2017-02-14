@@ -1,10 +1,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
+#include <sstream>
 
 #include "Graph.hpp"
 #include "io.hpp"
 #include "algorithms.hpp"
+#include "splicing.hpp"
 
 
 using namespace std;
@@ -104,6 +106,20 @@ int main (int argc, char * argv[]) {
 
 
 	// --- Splicing ---
+	cout << endl << "--- Splicing ---" << endl;
+	Graph<MetaNode> spliced = splice (filtered, false);
+
+
+	// --- Output ---
+	cout << endl << "--- Saving results ---" << endl;
+	cout << "-> Saving components" << endl;
+	stringstream ss;
+	ss << basename << "components.csv";
+	ofstream outStream (ss.str());
+	ifstream inStream (nodesFilename);
+	// Graph<MetaNode> metagraph, Graph<Node> graph, ifstream & nodes, ofstream & componentsStream
+	save_componants (spliced, graph, inStream, outStream);
+
 
 
 	cout << endl << "--- Program ended ---" << endl;
