@@ -137,7 +137,17 @@ void save_componants (Graph<MetaNode> metagraph, Graph<Node> graph, ifstream & n
 
 
 void save_metagraph (Graph<MetaNode> graph, ofstream & nodes, ofstream & edges) {
-	
+	nodes << "node;size" << endl;
+	edges << "from;to" << endl;
+
+	for (MetaNode & mn : graph.nodes) {
+		nodes << mn.idx << ";" << mn.subNodes.size() << endl;
+
+		for (int neiIdx : mn.neighbors) {
+			if (neiIdx > mn.idx)
+				edges << mn.idx << ";" << neiIdx << endl;
+		}
+	}
 }
 
 

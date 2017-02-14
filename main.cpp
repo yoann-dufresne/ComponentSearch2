@@ -117,8 +117,16 @@ int main (int argc, char * argv[]) {
 	ss << basename << "components.csv";
 	ofstream outStream (ss.str());
 	ifstream inStream (nodesFilename);
-	// Graph<MetaNode> metagraph, Graph<Node> graph, ifstream & nodes, ofstream & componentsStream
 	save_componants (spliced, graph, inStream, outStream);
+
+	cout << "-> Saving meta graph" << endl;
+	stringstream nodes;
+	stringstream edges;
+	nodes << basename << "metaNodes.csv";
+	edges << basename << "metaEdges.csv";
+	ofstream nodesStream (nodes.str());
+	ofstream edgesStream (edges.str());
+	save_metagraph (spliced, nodesStream, edgesStream);
 
 
 
