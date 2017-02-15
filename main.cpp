@@ -12,7 +12,6 @@
 using namespace std;
 
 
-
 int main (int argc, char * argv[]) {
 
 	// --- Default parameters ---
@@ -62,7 +61,7 @@ int main (int argc, char * argv[]) {
 
 
 	// --- Loading ---
-	cout << "--- Loading ---" << endl;
+	cout << endl << "--- Loading ---" << endl;
 
 	ifstream nodesFile (nodesFilename.c_str());
 	if (!nodesFile) {
@@ -80,7 +79,6 @@ int main (int argc, char * argv[]) {
 	cout << graph.nodes.size() << " nodes loaded " << endl;
 
 
-
 	// --- Algorithms ---
 	cout << endl << "--- Run algorithms ---" << endl;
 	cout << "-> DFS..." << endl;
@@ -93,7 +91,6 @@ int main (int argc, char * argv[]) {
 	cout << "-> Absorb fingers..." << endl;
 	contracted = absorbFingers (contracted);
 	cout << contracted.nodes.size() << " nodes in the contracted graph" << endl;
-
 
 	cout << endl << "--- Filtering ---" << endl;
 	cout << "-> Filtering nodes..." << endl;
@@ -127,9 +124,7 @@ int main (int argc, char * argv[]) {
 	ofstream edgesStream (edges.str());
 	save_metagraph (spliced, nodesStream, edgesStream);
 
-
-
-	cout << endl << "--- Program ended ---" << endl;
+	cout << endl << "--- Program ended ---" << endl << endl;
 
 	return 0;
 }
