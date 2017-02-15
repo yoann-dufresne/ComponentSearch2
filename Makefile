@@ -7,7 +7,7 @@ OBJ= $(SRC:.cpp=.o)
 
 all: componentsearch
 
-cs2: $(OBJ)
+componentsearch: $(OBJ)
 	$(CC) -o $@ $^ $(FLAGS)
 
 %.o: %.cpp
