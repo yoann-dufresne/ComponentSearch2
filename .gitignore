@@ -28,7 +28,6 @@
 *.out
 *.app
 
-
-cs2
+componentsearch
 *.csv
 data/
