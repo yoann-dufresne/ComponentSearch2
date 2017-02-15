@@ -15,3 +15,4 @@ cs2: $(OBJ)
 
 clean:
 	rm -rf *.o
+	rm -rf componentsearch
