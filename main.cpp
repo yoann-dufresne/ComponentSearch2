@@ -12,7 +12,6 @@
 using namespace std;
 
 
-
 int main (int argc, char * argv[]) {
 
 	// --- Default parameters ---
@@ -62,7 +61,7 @@ int main (int argc, char * argv[]) {
 
 
 	// --- Loading ---
-	cout << "--- Loading ---" << endl;
+	cout << endl << "--- Loading ---" << endl;
 
 	ifstream nodesFile (nodesFilename.c_str());
 	if (!nodesFile) {
@@ -80,7 +79,6 @@ int main (int argc, char * argv[]) {
 	cout << graph.nodes.size() << " nodes loaded " << endl;
 
 
-
 	// --- Algorithms ---
 	cout << endl << "--- Run algorithms ---" << endl;
 	cout << "-> BFS..." << endl;
@@ -89,20 +87,21 @@ int main (int argc, char * argv[]) {
 	cout << "-> Contraction..." << endl;
 	Graph<MetaNode> contracted = contract (graph, bfs);
 	cout << contracted.nodes.size() << " nodes in the contracted graph" << endl;
+	cout << contracted.getEdgesNb() << " edges in the contracted graph" << endl;
 
 	cout << "-> Absorb fingers..." << endl;
 	contracted = absorbFingers (contracted);
 	cout << contracted.nodes.size() << " nodes in the contracted graph" << endl;
-
+	cout << contracted.getEdgesNb() << " edges in the contracted graph" << endl;
 
 	cout << endl << "--- Filtering ---" << endl;
 	cout << "-> Filtering nodes..." << endl;
 	Graph<MetaNode> filtered = filterNodes (contracted, nodeFilter);
+	cout << filtered.nodes.size() << " nodes in the filtered graph" << endl;
 
 	cout << "-> Filtering edges..." << endl;
 	filtered = filterEdges (filtered, nodeFilter, graph.nodes.size());
-	cout << filtered.nodes.size() << " nodes in the filtered graph" << endl;
-
+	cout << filtered.getEdgesNb() << " edges in the filtered graph" << endl;
 
 
 	// --- Splicing ---
@@ -114,7 +113,7 @@ int main (int argc, char * argv[]) {
 	cout << endl << "--- Saving results ---" << endl;
 	cout << "-> Saving components" << endl;
 	stringstream ss;
-	ss << basename << "components.csv";
+	ss << basename << ".components.csv";
 	ofstream outStream (ss.str());
 	ifstream inStream (nodesFilename);
 	save_componants (spliced, graph, inStream, outStream);
@@ -122,15 +121,13 @@ int main (int argc, char * argv[]) {
 	cout << "-> Saving meta graph" << endl;
 	stringstream nodes;
 	stringstream edges;
-	nodes << basename << "metaNodes.csv";
-	edges << basename << "metaEdges.csv";
+	nodes << basename << ".metaNodes.csv";
+	edges << basename << ".metaEdges.csv";
 	ofstream nodesStream (nodes.str());
 	ofstream edgesStream (edges.str());
 	save_metagraph (spliced, nodesStream, edgesStream);
 
-
-
-	cout << endl << "--- Program ended ---" << endl;
+	cout << endl << "--- Program ended ---" << endl << endl;
 
 	return 0;
 }
