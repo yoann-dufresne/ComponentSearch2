@@ -34,14 +34,13 @@ template <typename N>
 class Graph {
 public:
 	vector<N> nodes;
-	
+
 	Graph();
 
 	N & getNodeFromIdx (int idx);
+	int getEdgesNb();
 	void print();
 };
-
-
 
 
 /* ----- Template implementations ----- */
@@ -55,10 +54,17 @@ void Graph<N>::print() {
 		node.print();
 }
 
-
 template <typename N>
 N & Graph<N>::getNodeFromIdx (int idx) {
 	return *(find(nodes.begin(), nodes.end(), Node(idx)));
+}
+
+template <typename N>
+int Graph<N>::getEdgesNb() {
+	int edgesNb = 0;
+	for (N node: nodes)
+		edgesNb += node.neighbors.size();
+	return edgesNb / 2;
 }
 
 #endif

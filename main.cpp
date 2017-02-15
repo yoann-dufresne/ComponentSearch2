@@ -87,18 +87,21 @@ int main (int argc, char * argv[]) {
 	cout << "-> Contraction..." << endl;
 	Graph<MetaNode> contracted = contract (graph, dfs);
 	cout << contracted.nodes.size() << " nodes in the contracted graph" << endl;
+	cout << contracted.getEdgesNb() << " edges in the contracted graph" << endl;
 
 	cout << "-> Absorb fingers..." << endl;
 	contracted = absorbFingers (contracted);
 	cout << contracted.nodes.size() << " nodes in the contracted graph" << endl;
+	cout << contracted.getEdgesNb() << " edges in the contracted graph" << endl;
 
 	cout << endl << "--- Filtering ---" << endl;
 	cout << "-> Filtering nodes..." << endl;
 	Graph<MetaNode> filtered = filterNodes (contracted, nodeFilter);
+	cout << filtered.nodes.size() << " nodes in the filtered graph" << endl;
 
 	cout << "-> Filtering edges..." << endl;
 	filtered = filterEdges (filtered, nodeFilter, graph.nodes.size());
-	cout << filtered.nodes.size() << " nodes in the filtered graph" << endl;
+	cout << filtered.getEdgesNb() << " edges in the filtered graph" << endl;
 
 
 	// --- Splicing ---
