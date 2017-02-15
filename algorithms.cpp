@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-vector<int> DFS (Graph<Node> & graph) {
+vector<int> BFS (Graph<Node> & graph) {
 	vector<int> dfs (graph.nodes.size(), -1);
 	set<int> toAnnotate;
 	for (int i=0 ; i<graph.nodes.size() ; i++)
@@ -113,14 +113,16 @@ Graph<MetaNode> absorbFingers (Graph<MetaNode> graph) {
 		if (mn.neighbors.size() == 1) {
 			MetaNode & metaNei = graph.getNodeFromIdx(*(mn.neighbors.begin()));
 
-			for (Node & sub : mn.subNodes)
-				metaNei.subNodes.push_back(sub);
-			metaNei.neighbors.erase(
-				remove(metaNei.neighbors.begin(), metaNei.neighbors.end(), mn.idx),
-				metaNei.neighbors.end()
-			);
-
-			toRemove.push_back(mn);
+			if (metaNei.neighbors.size() > 2) {
+				for (Node & sub : mn.subNodes)
+					metaNei.subNodes.push_back(sub);
+				metaNei.neighbors.erase(
+					remove(metaNei.neighbors.begin(), metaNei.neighbors.end(), mn.idx),
+					metaNei.neighbors.end()
+				);
+				
+				toRemove.push_back(mn);
+			}
 		}
 	}
 

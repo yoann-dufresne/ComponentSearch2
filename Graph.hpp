@@ -38,7 +38,7 @@ public:
 	Graph();
 
 	N & getNodeFromIdx (int idx);
-	int getEdgesNb();
+	long getEdgesNb();
 	void print();
 };
 
@@ -60,8 +60,8 @@ N & Graph<N>::getNodeFromIdx (int idx) {
 }
 
 template <typename N>
-int Graph<N>::getEdgesNb() {
-	int edgesNb = 0;
+long Graph<N>::getEdgesNb() {
+	long edgesNb = 0;
 	for (N node: nodes)
 		edgesNb += node.neighbors.size();
 	return edgesNb / 2;

@@ -81,11 +81,11 @@ int main (int argc, char * argv[]) {
 
 	// --- Algorithms ---
 	cout << endl << "--- Run algorithms ---" << endl;
-	cout << "-> DFS..." << endl;
-	vector<int> dfs = DFS (graph);
+	cout << "-> BFS..." << endl;
+	vector<int> bfs = BFS (graph);
 
 	cout << "-> Contraction..." << endl;
-	Graph<MetaNode> contracted = contract (graph, dfs);
+	Graph<MetaNode> contracted = contract (graph, bfs);
 	cout << contracted.nodes.size() << " nodes in the contracted graph" << endl;
 	cout << contracted.getEdgesNb() << " edges in the contracted graph" << endl;
 
