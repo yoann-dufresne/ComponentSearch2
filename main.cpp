@@ -104,7 +104,6 @@ int main (int argc, char * argv[]) {
 	cout << filtered.nodes.size() << " nodes in the filtered graph" << endl;
 
 
-
 	// --- Splicing ---
 	cout << endl << "--- Splicing ---" << endl;
 	Graph<MetaNode> spliced = splice (filtered, false);
@@ -114,7 +113,7 @@ int main (int argc, char * argv[]) {
 	cout << endl << "--- Saving results ---" << endl;
 	cout << "-> Saving components" << endl;
 	stringstream ss;
-	ss << basename << "components.csv";
+	ss << basename << ".components.csv";
 	ofstream outStream (ss.str());
 	ifstream inStream (nodesFilename);
 	save_componants (spliced, graph, inStream, outStream);
@@ -122,8 +121,8 @@ int main (int argc, char * argv[]) {
 	cout << "-> Saving meta graph" << endl;
 	stringstream nodes;
 	stringstream edges;
-	nodes << basename << "metaNodes.csv";
-	edges << basename << "metaEdges.csv";
+	nodes << basename << ".metaNodes.csv";
+	edges << basename << ".metaEdges.csv";
 	ofstream nodesStream (nodes.str());
 	ofstream edgesStream (edges.str());
 	save_metagraph (spliced, nodesStream, edgesStream);
