@@ -5,8 +5,7 @@ FLAGS=-O3 -std=c++11
 SRC= $(wildcard *.cpp)
 OBJ= $(SRC:.cpp=.o)
 
-
-all: cs2
+all: componentsearch
 
 cs2: $(OBJ)
 	$(CC) -o $@ $^ $(FLAGS)
