@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-vector<int> DFS (Graph<Node> & graph) {
+vector<int> BFS (Graph<Node> & graph) {
 	vector<int> dfs (graph.nodes.size(), -1);
 	set<int> toAnnotate;
 	for (int i=0 ; i<graph.nodes.size() ; i++)
