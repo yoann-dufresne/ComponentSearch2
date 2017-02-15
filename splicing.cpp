@@ -1,19 +1,14 @@
 #include "splicing.hpp"
 
 
-// class Bond {
-// public:
-// 	int from;
-// 	int to;
-// };
 
 Graph<MetaNode> splice (Graph<MetaNode> graph, bool optimize) {
-	// vector<struct bond_s> toRemove;
-
 	for (MetaNode & mn : graph.nodes) {
+		set<int> neiToRemove;
+
 		// Looks for hub nodes
 		if (mn.neighbors.size() > 2) {
-			for (int neiIdx :  mn.neighbors) {
+			for (int neiIdx : mn.neighbors) {
 				MetaNode & nei = graph.getNodeFromIdx(neiIdx);
 
 
@@ -24,11 +19,8 @@ Graph<MetaNode> splice (Graph<MetaNode> graph, bool optimize) {
 						remove(nei.neighbors.begin(), nei.neighbors.end(), mn.idx),
 						nei.neighbors.end()
 					);
-					// Remove the main node to neighbor link
-					mn.neighbors.erase(
-						remove(mn.neighbors.begin(), mn.neighbors.end(), nei.idx),
-						mn.neighbors.end()
-					);
+
+					neiToRemove.insert(neiIdx);
 
 					// optimize the nodes in the components that are not hubs
 					if (optimize) {
@@ -36,6 +28,14 @@ Graph<MetaNode> splice (Graph<MetaNode> graph, bool optimize) {
 					}
 				}
 			}
+		}
+
+		for (int idx : neiToRemove) {
+			// Remove the main node to neighbor link
+			mn.neighbors.erase(
+				remove(mn.neighbors.begin(), mn.neighbors.end(), idx),
+				mn.neighbors.end()
+			);
 		}
 	}
 
